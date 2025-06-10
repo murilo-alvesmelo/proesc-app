@@ -1,75 +1,99 @@
-import React, {
-  createContext,
-  PropsWithChildren,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import { useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { SplashScreen, useRouter } from "expo-router";
+import { createContext, useContext, useEffect, useState } from "react";
 
 type AuthState = {
   isLoggedIn: boolean;
   isReady: boolean;
-  logIn: () => void;
+  matricula: string | null;
+  password: string | null;
+  logIn: (matricula: string, password: string) => void;
   logOut: () => void;
 };
 
-const authStorageKey = "authState";
+SplashScreen.preventAutoHideAsync();
 
-const AuthContext = createContext<AuthState>({
+export const AuthContext = createContext<AuthState>({
   isLoggedIn: false,
   isReady: false,
+  matricula: null,
+  password: null,
   logIn: () => {},
   logOut: () => {},
 });
 
-export const AuthProvider = ({ children }: PropsWithChildren) => {
-  const [isReady, setIsReady] = useState(false);
+const AUTH_STATE_KEY = "authState";
+
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [matricula, setMatricula] = useState<string | null>(null);
+  const [password, setPassword] = useState<string | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isReady, setIsReady] = useState(false);
   const router = useRouter();
 
-  const storageAuthState = async (newState: { isLoggedIn: boolean }) => {
+  async function storeAuthState(state: {
+    isLoggedIn: boolean;
+    matricula: string | null;
+    password: string | null;
+  }) {
     try {
-      await AsyncStorage.setItem(authStorageKey, JSON.stringify(newState));
+      await AsyncStorage.setItem(AUTH_STATE_KEY, JSON.stringify(state));
     } catch (error) {
-      console.error("Failed to save auth state:", error);
+      console.error(error);
     }
-  };
+  }
 
-  const logIn = () => {
+  function logIn(matricula: string, password: string) {
     setIsLoggedIn(true);
-    storageAuthState({ isLoggedIn: true });
-    router.replace("/(protected)/home");
-  };
+    setMatricula(matricula);
+    setPassword(password);
+    storeAuthState({ isLoggedIn: true, matricula, password });
+    router.replace("/(protected)/(tabs)");
+  }
 
-  const logOut = () => {
+  function logOut() {
     setIsLoggedIn(false);
-    storageAuthState({ isLoggedIn: false });
+    setMatricula(null);
+    setPassword(null);
+    storeAuthState({ isLoggedIn: false, matricula: null, password: null });
     router.replace("/(public)/login");
-  };
+  }
 
   useEffect(() => {
-    const getAuthFromStorage = async () => {
+    async function loadAuthState() {
       try {
-        const value = await AsyncStorage.getItem(authStorageKey);
-        if (value !== null) {
-          const auth = JSON.parse(value);
-          setIsLoggedIn(auth.isLoggedIn);
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        const stored = await AsyncStorage.getItem(AUTH_STATE_KEY);
+        if (stored) {
+          const { isLoggedIn, matricula, password } = JSON.parse(stored);
+          setIsLoggedIn(isLoggedIn);
+          setMatricula(matricula);
+          setPassword(password);
         }
       } catch (error) {
-        console.error("Failed to load auth state:", error);
+        console.error(error);
+      } finally {
+        setIsReady(true);
       }
-      setIsReady(true);
-    };
-    getAuthFromStorage();
+    }
+    loadAuthState();
   }, []);
 
+  useEffect(() => {
+    if (isReady) {
+      SplashScreen.hideAsync();
+    }
+  }, [isReady]);
+
   return (
-    <AuthContext.Provider value={{ isReady, isLoggedIn, logIn, logOut }}>
+    <AuthContext.Provider
+      value={{ isLoggedIn, isReady, matricula, password, logIn, logOut }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => useContext(AuthContext);
+export function useAuth() {
+  return useContext(AuthContext);
+}

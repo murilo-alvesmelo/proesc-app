@@ -6,6 +6,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
+  Alert,
 } from "react-native";
 import React from "react";
 import Colors from "@/src/constants/Colors";
@@ -13,14 +14,22 @@ import Spaces from "@/src/constants/Spaces";
 import { ButtonApp } from "@/src/components/ButtonApp";
 import InputApp from "@/src/components/InputApp";
 import { useAuth } from "@/src/context/Auth";
+import { login } from "@/src/api/auth";
 
 export default function LoginView() {
-  const [email, setEmail] = React.useState("");
+  const [matricula, setMatricula] = React.useState("");
   const [password, setPassword] = React.useState("");
   const { logIn } = useAuth();
-
-  const handleLogin = () => {
-    logIn();
+  const handleLogin = async () => {
+    try {
+      const { matricula: userMatricula, password: userPassword } = await login(
+        matricula,
+        password
+      );
+      logIn(userMatricula, userPassword);
+    } catch (err) {
+      Alert.alert("Oops!", "Credenciais inválidas. Tente novamente.");
+    }
   };
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -38,8 +47,8 @@ export default function LoginView() {
             </Text>
             <InputApp
               placeholder="Email"
-              onChangeValue={(email) => setEmail(email)}
-              value={email}
+              onChangeValue={(email) => setMatricula(email)}
+              value={matricula}
               icon="envelope"
             />
             <InputApp
@@ -51,7 +60,7 @@ export default function LoginView() {
             />
 
             <ButtonApp
-              handlePress={logIn}
+              handlePress={handleLogin}
               title="Login"
               icon="arrow-right"
               loading={false}
