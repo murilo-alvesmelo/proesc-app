@@ -21,15 +21,13 @@ const styles = StyleSheet.create({
 
   primary: {
     backgroundColor: Colors.bgWhite,
+    borderWidth: 1,
+    borderColor: Colors.camarone950,
   },
   secondary: {
     backgroundColor: Colors.camarone950,
     borderWidth: 1,
     borderColor: Colors.camarone500,
-  },
-  tertiary: {
-    borderWidth: 1,
-    borderColor: Colors.bgWhite,
   },
   primaryIcon: {
     color: Colors.camarone950,
@@ -37,17 +35,11 @@ const styles = StyleSheet.create({
   secondaryIcon: {
     color: Colors.camarone500,
   },
-  tertiaryIcon: {
-    color: Colors.bgWhite,
-  },
   primaryButtonText: {
     color: Colors.camarone950,
   },
   secondaryButtonText: {
     color: Colors.camarone500,
-  },
-  tertiaryButtonText: {
-    color: Colors.bgWhite,
   },
 });
 

@@ -7,12 +7,12 @@ import { styles } from "./style";
 import Colors from "@/src/constants/Colors";
 import Spaces from "@/src/constants/Spaces";
 
-type ButtonAfterProps = {
+type ButtonAppProps = {
   title: string;
   handlePress: () => void;
   iconPrefix?: IconPrefix;
   icon?: IconName;
-  type?: "primary" | "secondary" | "tertiary";
+  type?: "primary" | "secondary";
   loading?: boolean;
 };
 
@@ -23,7 +23,7 @@ export function ButtonApp({
   icon,
   type = "primary",
   loading = false,
-}: ButtonAfterProps) {
+}: ButtonAppProps) {
   return (
     <TouchableOpacity
       style={[styles.button, styles[type]]}
