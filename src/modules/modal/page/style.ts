@@ -1,5 +1,4 @@
 import Colors from "@/src/constants/Colors";
-import Fonts from "@/src/constants/Fonts";
 import Spaces from "@/src/constants/Spaces";
 import { StyleSheet } from "react-native";
 
@@ -16,9 +15,6 @@ const styles = StyleSheet.create({
     gap: Spaces.space16,
     borderTopLeftRadius: Spaces.space16,
     borderTopRightRadius: Spaces.space16,
-  },
-  title: {
-    fontSize: Fonts.font16,
   },
 });
 
