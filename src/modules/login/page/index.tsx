@@ -12,6 +12,7 @@ import { useLoginStore } from "../store/useLoginStore";
 import { styles } from "./style";
 
 import InputApp from "@/src/components/InputApp";
+import LogoSvg from "@/src/components/Svg/logo";
 
 export default function Login() {
   const { matricula, setMatricula, password, setPassword, handleLogin } =
@@ -24,6 +25,7 @@ export default function Login() {
       >
         <View style={styles.container}>
           <View style={styles.viewTitle}>
+            <LogoSvg />
             <Text style={styles.title}>Proesc App</Text>
           </View>
           <View style={styles.loginContainer}>
