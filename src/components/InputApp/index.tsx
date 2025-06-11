@@ -11,6 +11,7 @@ type InputAppProps = {
   icon?: IconName;
   secureTextEntry?: boolean;
   keyboardType?: KeyboardType;
+  type?: "primary" | "secondary";
 };
 
 export default function InputApp({
@@ -20,25 +21,28 @@ export default function InputApp({
   icon,
   secureTextEntry = false,
   keyboardType = "default",
+  type = "primary",
 }: InputAppProps) {
   return (
-    <View style={styles.input}>
+    <View style={[styles.input, styles[type]]}>
       {icon && (
         <FontAwesomeIcon
           icon={["fas", icon]}
           size={16}
-          color={Colors.bgWhite}
+          color={type === "primary" ? Colors.bgWhite : Colors.camarone900}
         />
       )}
       <TextInput
         autoCapitalize="none"
         textContentType="oneTimeCode"
         placeholder={placeholder}
-        placeholderTextColor={Colors.bgWhite}
+        placeholderTextColor={
+          type === "primary" ? Colors.bgWhite : Colors.camarone900
+        }
         value={value}
         onChangeText={onChangeValue}
         secureTextEntry={secureTextEntry}
-        style={styles.inputText}
+        style={[styles.inputText, styles[`${type}Text`]]}
         keyboardType={keyboardType}
       />
     </View>

@@ -1,6 +1,7 @@
 export default {
   font8: 8,
   font12: 12,
+  font14: 14,
   font16: 16,
   font20: 20,
   font24: 24,

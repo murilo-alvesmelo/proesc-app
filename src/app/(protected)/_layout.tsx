@@ -1,5 +1,6 @@
 import { useAuth } from "@/src/context/Auth";
 import { Redirect, Stack } from "expo-router";
+import { SafeAreaView } from "react-native";
 import "react-native-reanimated";
 
 export default function ProtectedLayout() {
@@ -16,6 +17,19 @@ export default function ProtectedLayout() {
   return (
     <Stack>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="modal"
+        options={{
+          presentation: "transparentModal",
+          contentStyle: {
+            backgroundColor: "transparent",
+            justifyContent: "flex-end",
+          },
+          headerShown: false,
+          gestureDirection: "vertical",
+          animation: "slide_from_bottom",
+        }}
+      />
     </Stack>
   );
 }
