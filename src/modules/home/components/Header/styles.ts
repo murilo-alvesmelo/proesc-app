@@ -15,14 +15,15 @@ const styles = StyleSheet.create({
   title: {
     fontSize: Fonts.font16,
     fontWeight: "bold",
-    color: Colors.camarone200,
+    color: Colors.camarone100,
   },
   logo: {
     width: 40,
     height: 40,
+    color: Colors.camarone100,
   },
   row: {
-    flexDirection: "row-reverse",
+    flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",

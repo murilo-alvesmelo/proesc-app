@@ -10,11 +10,11 @@ const style = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: Spaces.space12,
-    backgroundColor: Colors.camarone950,
+    backgroundColor: Colors.bgWhite,
     marginRight: Spaces.space8,
   },
   title: {
-    color: Colors.camarone100,
+    color: Colors.camarone950,
     fontSize: Fonts.font12,
     fontWeight: "700",
     textAlign: "center",
@@ -22,12 +22,10 @@ const style = StyleSheet.create({
   },
 
   active: {
-    backgroundColor: Colors.bgWhite,
-    borderColor: Colors.camarone950,
-    borderWidth: 1,
+    backgroundColor: Colors.camarone950,
   },
   titleActive: {
-    color: Colors.camarone950,
+    color: Colors.camarone100,
   },
 });
 

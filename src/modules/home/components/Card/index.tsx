@@ -6,6 +6,7 @@ import styles from "./style";
 import { treatCategorie, treatTypeIcon } from "@/src/utils/treatCategorie";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import Colors from "@/src/constants/Colors";
+import { router } from "expo-router";
 
 type CardProps = {
   item: Document;
@@ -14,7 +15,9 @@ type CardProps = {
 
 export default function Card({ item, index }: CardProps) {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() => router.push(`/modal?id=${item.id}&action=view`)}
+    >
       <Animated.View
         entering={SlideInLeft.delay(300 * ((index % 10) + 1)).duration(300)}
         style={styles.documentCard}
