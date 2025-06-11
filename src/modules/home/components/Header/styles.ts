@@ -8,9 +8,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "flex-start",
     padding: Spaces.space12,
-    paddingVertical: Spaces.space16,
     backgroundColor: Colors.camarone950,
     color: Colors.camarone200,
+    height: 120,
   },
   title: {
     fontSize: Fonts.font16,
