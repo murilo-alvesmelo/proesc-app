@@ -2,7 +2,7 @@ import { Text, ScrollView, View, Image } from "react-native";
 import React from "react";
 import styles from "./style";
 import { Document } from "@/src/interfaces";
-import DocumentViewer from "../DocumentViewer";
+import DocumentViewer from "../../components/DocumentViewer";
 
 export default function InfoDocument({ item }: { item: Document | undefined }) {
   return (

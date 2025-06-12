@@ -5,8 +5,8 @@ import styles from "./style";
 import Handle from "../components/Handle";
 import { useModalStore } from "../store/useModalStore";
 import { useEffect } from "react";
-import InfoDocument from "../components/InfoDocument";
-import UploadDocument from "../components/UploadDocument";
+import InfoDocument from "./InfoDocument";
+import UploadDocument from "./UploadDocument";
 
 type Params = {
   id?: string;

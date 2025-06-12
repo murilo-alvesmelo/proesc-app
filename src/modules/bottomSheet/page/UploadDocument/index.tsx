@@ -1,61 +1,26 @@
-import { View, Text, StyleSheet, ScrollView, Alert } from "react-native";
-import React, { useState } from "react";
+import React from "react";
+import { ButtonApp } from "@/src/components/ButtonApp";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { catergoriesUpload, statusDocument } from "@/src/constants/Filters";
+
 import InputApp from "@/src/components/InputApp";
 import Tag from "@/src/components/Tag";
-import { ButtonApp } from "@/src/components/ButtonApp";
 import Fonts from "@/src/constants/Fonts";
 import Colors from "@/src/constants/Colors";
-import {
-  pickFromCamera,
-  pickFromFiles,
-  pickFromGallery,
-} from "@/src/utils/functionsPick";
-import { catergoriesUpload, statusDocument } from "@/src/constants/Filters";
-import { uploadDocument } from "../../services/modalService";
-import { router } from "expo-router";
-import { Category, DocumentStatus } from "@/src/interfaces";
+import { useUploadStore } from "../../store/useUploadStore";
 
 export default function UploadDocument() {
-  const [documentName, setDocumentName] = useState<string>("");
-  const [selectedCategory, setSelectedCategory] = useState<Category>();
-  const [selectedStatus, setSelectedStatus] = useState<DocumentStatus>();
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const handleSelect = async (source: "camera" | "gallery" | "files") => {
-    let file;
-    if (source === "camera") file = await pickFromCamera();
-    if (source === "gallery") file = await pickFromGallery();
-    if (source === "files") file = await pickFromFiles();
-
-    if (file) {
-      setSelectedFile(file);
-    }
-  };
-
-  const handleUpload = async () => {
-    if (!documentName || !selectedCategory || !selectedStatus) {
-      Alert.alert("Erro", "Por favor, preencha todos os campos.");
-      return;
-    }
-    if (!selectedFile) {
-      Alert.alert("Erro", "Por favor, anexe um documento.");
-      return;
-    }
-    const documentData = {
-      id: "",
-      title: documentName,
-      category: selectedCategory,
-      status: selectedStatus,
-      file: "",
-      uploadDate: new Date().toISOString().split("T")[0],
-    };
-    await uploadDocument(documentData);
-    Alert.alert("Sucesso", "Documento enviado com sucesso!", [
-      {
-        text: "OK",
-        onPress: () => router.back(),
-      },
-    ]);
-  };
+  const {
+    documentName,
+    setDocumentName,
+    selectedCategory,
+    setSelectedCategory,
+    selectedStatus,
+    setSelectedStatus,
+    selectedFile,
+    handleSelect,
+    handleUpload,
+  } = useUploadStore();
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -93,6 +58,11 @@ export default function UploadDocument() {
           </ScrollView>
         </View>
         <Text style={styles.title}>Anexar Documento</Text>
+        <Text>
+          {selectedFile
+            ? "Um arquivo foi anexado"
+            : "Nenhum arquivo selecionado"}
+        </Text>
         <View style={styles.buttonContainer}>
           <ButtonApp title="Foto" handlePress={() => handleSelect("camera")} />
           <ButtonApp
