@@ -12,6 +12,8 @@ import { categoriesDocuments } from "@/src/constants/Filters";
 
 export default function Home() {
   const {
+    searchValue,
+    setSearchValue,
     documentsAvailable,
     filteredDocuments,
     setFilteredDocuments,
@@ -25,8 +27,8 @@ export default function Home() {
       <View style={{ padding: 8, gap: 8 }}>
         <InputApp
           placeholder="Pesquisar documento"
-          value=""
-          onChangeValue={() => {}}
+          value={searchValue}
+          onChangeValue={setSearchValue}
           icon="search"
           keyboardType="default"
           type="secondary"

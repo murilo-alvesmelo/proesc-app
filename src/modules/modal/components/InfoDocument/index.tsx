@@ -2,12 +2,9 @@ import { Text, ScrollView, View, Image } from "react-native";
 import React from "react";
 import styles from "./style";
 import { Document } from "@/src/interfaces";
-import { normalizeDocumentUrl } from "@/src/utils/treatCategorie";
 import DocumentViewer from "../DocumentViewer";
 
 export default function InfoDocument({ item }: { item: Document | undefined }) {
-  const urlTratement = normalizeDocumentUrl("./assets/comunicado.html");
-  console.log("Item:", urlTratement);
   return (
     <ScrollView>
       <View style={styles.subContainer}>
@@ -31,7 +28,10 @@ export default function InfoDocument({ item }: { item: Document | undefined }) {
           </Text>
         </View>
       </View>
-      <DocumentViewer type={"html"} uri={`@assets/${urlTratement}`} />
+      <DocumentViewer
+        type={"jpg"}
+        uri={`file:///Users/muriloalves/Library/Developer/CoreSimulator/Devices/45F9B886-7A41-47FF-BCCE-EF62F5740877/data/Containers/Data/Application/8D028228-A69A-4DAD-ACA5-9A3F83A86330/Library/Caches/ExponentExperienceData/@anonymous/proesc-app-82558f78-0bd4-4dd1-87ef-33aa877b92e5/ImagePicker/4ACECB11-B469-4EA2-BB9D-9F99A9018FF7.jpg`}
+      />
     </ScrollView>
   );
 }

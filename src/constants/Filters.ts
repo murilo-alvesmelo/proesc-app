@@ -2,6 +2,7 @@ export const catergoriesUpload = [
   { key: "atestado", label: "Atestado" },
   { key: "justificativa", label: "Justificativa" },
   { key: "requerimento", label: "Requerimento" },
+  { key: "outros", label: "Outros" },
 ];
 
 export const statusDocument = [

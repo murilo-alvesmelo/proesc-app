@@ -33,13 +33,13 @@ const styles = StyleSheet.create({
     color: Colors.camarone950,
   },
   secondaryIcon: {
-    color: Colors.camarone500,
+    color: Colors.camarone200,
   },
   primaryButtonText: {
     color: Colors.camarone950,
   },
   secondaryButtonText: {
-    color: Colors.camarone500,
+    color: Colors.camarone200,
   },
 });
 

@@ -11,11 +11,15 @@ import {
   pickFromGallery,
 } from "@/src/utils/functionsPick";
 import { catergoriesUpload, statusDocument } from "@/src/constants/Filters";
+import { uploadDocument } from "../../services/modalService";
+import { router } from "expo-router";
+import { Category, DocumentStatus } from "@/src/interfaces";
 
 export default function UploadDocument() {
   const [documentName, setDocumentName] = useState<string>("");
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const [selectedStatus, setSelectedStatus] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<Category>();
+  const [selectedStatus, setSelectedStatus] = useState<DocumentStatus>();
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const handleSelect = async (source: "camera" | "gallery" | "files") => {
     let file;
     if (source === "camera") file = await pickFromCamera();
@@ -23,41 +27,70 @@ export default function UploadDocument() {
     if (source === "files") file = await pickFromFiles();
 
     if (file) {
-      console.log("Arquivo selecionado:", file);
-      Alert.alert("Arquivo selecionado", file.name || file.uri);
+      setSelectedFile(file);
     }
+  };
+
+  const handleUpload = async () => {
+    if (!documentName || !selectedCategory || !selectedStatus) {
+      Alert.alert("Erro", "Por favor, preencha todos os campos.");
+      return;
+    }
+    if (!selectedFile) {
+      Alert.alert("Erro", "Por favor, anexe um documento.");
+      return;
+    }
+    const documentData = {
+      id: "",
+      title: documentName,
+      category: selectedCategory,
+      status: selectedStatus,
+      file: "",
+      uploadDate: new Date().toISOString().split("T")[0],
+    };
+    await uploadDocument(documentData);
+    Alert.alert("Sucesso", "Documento enviado com sucesso!", [
+      {
+        text: "OK",
+        onPress: () => router.back(),
+      },
+    ]);
   };
   return (
     <ScrollView>
       <View style={styles.container}>
         <Text style={styles.title}>Nome do Documento</Text>
         <InputApp
+          placeholder="Digite o nome do documento"
           type="secondary"
           onChangeValue={setDocumentName}
           value={documentName}
-          placeholder="Digite o nome do documento"
         />
         <Text style={styles.title}>Categoria do Documento</Text>
         <View style={styles.tagContainer}>
-          {catergoriesUpload.map((category) => (
-            <Tag
-              key={category.key}
-              title={category.label}
-              isFunction={() => setSelectedCategory(category.key)}
-              active={selectedCategory === category.key}
-            />
-          ))}
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {catergoriesUpload.map((category) => (
+              <Tag
+                key={category.key}
+                title={category.label}
+                isFunction={() => setSelectedCategory(category.key)}
+                active={selectedCategory === category.key}
+              />
+            ))}
+          </ScrollView>
         </View>
         <Text style={styles.title}>Status do Documento</Text>
         <View style={styles.tagContainer}>
-          {statusDocument.map((status) => (
-            <Tag
-              key={status.key}
-              title={status.label}
-              isFunction={() => setSelectedStatus(status.key)}
-              active={selectedStatus === status.key}
-            />
-          ))}
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {statusDocument.map((status) => (
+              <Tag
+                key={status.key}
+                title={status.label}
+                isFunction={() => setSelectedStatus(status.key)}
+                active={selectedStatus === status.key}
+              />
+            ))}
+          </ScrollView>
         </View>
         <Text style={styles.title}>Anexar Documento</Text>
         <View style={styles.buttonContainer}>
@@ -71,6 +104,12 @@ export default function UploadDocument() {
             handlePress={() => handleSelect("files")}
           />
         </View>
+        <ButtonApp
+          title="Enviar Documento"
+          handlePress={handleUpload}
+          type="secondary"
+          icon="check"
+        />
       </View>
     </ScrollView>
   );

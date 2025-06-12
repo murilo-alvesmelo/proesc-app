@@ -1,6 +1,6 @@
 import { Document } from "@/src/interfaces";
 import { useEffect, useState } from "react";
-import { fetchCategories, fetchDocuments } from "../services/homeService";
+import { fetchDocuments } from "../services/homeService";
 
 export const useHomeStore = () => {
   const [documentsAvailable, setDocumentsAvailable] = useState<Document[]>([]);

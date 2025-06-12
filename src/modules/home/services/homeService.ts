@@ -1,4 +1,4 @@
-import { Document } from "@/src/interfaces";
+import { Document, UploadedDocument } from "@/src/interfaces";
 import { api } from "@/src/lib/axios";
 
 export const fetchDocuments = async () => {
@@ -7,6 +7,16 @@ export const fetchDocuments = async () => {
     return res.data as Document[];
   } catch (error) {
     console.error("Error fetching documents:", error);
+    throw error;
+  }
+};
+
+export const fetchUploadedDocuments = async () => {
+  try {
+    const res = await api.get("/uploadedDocuments");
+    return res.data as UploadedDocument[];
+  } catch (error) {
+    console.error("Error fetching uploaded documents:", error);
     throw error;
   }
 };
