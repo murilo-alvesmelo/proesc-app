@@ -21,6 +21,21 @@ export const treatCategorie = (categorie: string) => {
   }
 };
 
+export const treatStatus = (status: string) => {
+  switch (status) {
+    case "enviado":
+      return "Enviado";
+    case "em_analise":
+      return "Em Análise";
+    case "aprovado":
+      return "Aprovado";
+    case "rejeitado":
+      return "Rejeitado";
+    default:
+      return "Status Desconhecido";
+  }
+};
+
 export const treatTypeIcon = (type: string) => {
   switch (type) {
     case "pdf":
