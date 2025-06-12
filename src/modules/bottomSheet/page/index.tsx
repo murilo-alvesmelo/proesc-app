@@ -1,25 +1,30 @@
 import { Text, View } from "react-native";
 import { router } from "expo-router";
 import { useLocalSearchParams } from "expo-router/build/hooks";
-import styles from "./style";
-import Handle from "../components/Handle";
 import { useModalStore } from "../store/useModalStore";
 import { useEffect } from "react";
 import InfoDocument from "./InfoDocument";
 import UploadDocument from "./UploadDocument";
+import EditDocument from "./EditDocument";
+import Handle from "../components/Handle";
+import styles from "./style";
 
 type Params = {
   id?: string;
-  action?: "view" | "upload";
+  action?: "view" | "upload" | "edit";
 };
 export default function BottomSheet() {
   const params = useLocalSearchParams();
   const { id, action } = params as Params;
-  const { document, getData } = useModalStore();
-
+  const { uploadedDocument, document, getData, getUploadedDocument } =
+    useModalStore();
   useEffect(() => {
     if (id) {
-      getData(id);
+      if (action === "view") {
+        getData(id);
+      } else if (action === "edit") {
+        getUploadedDocument(id);
+      }
     }
   }, [id]);
 
@@ -29,6 +34,8 @@ export default function BottomSheet() {
         return <InfoDocument item={document} />;
       case "upload":
         return <UploadDocument />;
+      case "edit":
+        return <EditDocument item={uploadedDocument} />;
       default:
         return <Text>Ops!!!</Text>;
     }

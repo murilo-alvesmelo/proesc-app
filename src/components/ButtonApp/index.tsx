@@ -14,6 +14,7 @@ type ButtonAppProps = {
   icon?: IconName;
   type?: "primary" | "secondary";
   loading?: boolean;
+  disabled?: boolean;
 };
 
 export function ButtonApp({
@@ -23,12 +24,13 @@ export function ButtonApp({
   icon,
   type = "primary",
   loading = false,
+  disabled = false,
 }: ButtonAppProps) {
   return (
     <TouchableOpacity
       style={[styles.button, styles[type]]}
       onPress={handlePress}
-      disabled={loading}
+      disabled={disabled || loading}
     >
       {loading ? (
         <ActivityIndicator size="small" color={Colors.bgWhite} />

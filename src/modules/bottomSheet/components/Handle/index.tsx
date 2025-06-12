@@ -6,16 +6,26 @@ import Fonts from "@/src/constants/Fonts";
 
 type HandleProps = {
   onPress: () => void;
-  type?: "view" | "upload";
+  type?: "view" | "upload" | "edit";
 };
 
 export default function Handle({ onPress, type }: HandleProps) {
-  const title =
-    type === "view" ? "Informações do documento" : "Upload de documento";
+  const renderTitle = () => {
+    switch (type) {
+      case "view":
+        return "Informações do documento";
+      case "upload":
+        return "Upload de documento";
+      case "edit":
+        return "Edição de documento";
+      default:
+        return "Documento";
+    }
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.title} numberOfLines={1}>
-        {title}
+        {renderTitle()}
       </Text>
       <Pressable style={{}} onPress={onPress}>
         <FontAwesomeIcon

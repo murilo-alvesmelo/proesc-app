@@ -6,14 +6,14 @@ const { width, height } = Dimensions.get("window");
 
 type Props = {
   uri: string | undefined;
-  type: "pdf" | "html" | "jpg" | "jpeg" | "png" | "docx";
+  type: "pdf" | "html" | "jpg" | "jpeg" | "png" | "docx" | "image";
 };
 
 export default function DocumentViewer({ uri, type }: Props) {
   if (!uri) return <Text>Documento inválido</Text>;
 
   const renderContent = () => {
-    if (["jpg", "jpeg", "png"].includes(type)) {
+    if (["jpg", "jpeg", "png", "image"].includes(type)) {
       return (
         <Image source={{ uri }} style={styles.image} resizeMode="contain" />
       );

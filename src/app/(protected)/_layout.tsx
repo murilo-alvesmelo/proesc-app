@@ -1,6 +1,5 @@
 import { useAuth } from "@/src/context/Auth";
 import { Redirect, Stack } from "expo-router";
-import { SafeAreaView } from "react-native";
 import "react-native-reanimated";
 
 export default function ProtectedLayout() {

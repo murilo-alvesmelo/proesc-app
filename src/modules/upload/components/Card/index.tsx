@@ -14,7 +14,7 @@ type CardProps = {
 export default function Card({ item, index }: CardProps) {
   return (
     <TouchableOpacity
-      onPress={() => router.push(`/modal?id=${item.id}&action=view`)}
+      onPress={() => router.push(`/modal?id=${item.id}&action=edit`)}
     >
       <Animated.View
         entering={SlideInLeft.delay(300 * ((index % 10) + 1)).duration(300)}

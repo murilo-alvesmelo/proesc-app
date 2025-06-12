@@ -26,6 +26,7 @@ export const useUploadStore = () => {
     if (source === "files") return await pickFromFiles();
     return null;
   };
+
   const validateUpload = (): boolean => {
     if (!documentName || !selectedCategory || !selectedStatus) {
       Alert.alert("Erro", "Por favor, preencha todos os campos.");

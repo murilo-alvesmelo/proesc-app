@@ -24,9 +24,15 @@ export const useUploadStore = () => {
     }, 1000);
   };
 
+  const updateDocumentStatus = (id: string, newStatus: string) => {
+    setUploadedDocuments((prev) =>
+      prev.map((doc) => (doc.id === id ? { ...doc, status: newStatus } : doc))
+    );
+  };
+
   useEffect(() => {
     getUploadedDocuments();
-  }, []);
+  }, [uploadedDocuments]);
 
   return {
     filteredDocuments,
@@ -35,5 +41,6 @@ export const useUploadStore = () => {
     setUploadedDocuments,
     handleRefresh,
     loading,
+    updateDocumentStatus,
   };
 };
