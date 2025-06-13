@@ -1,9 +1,7 @@
-import { Text, ScrollView, View, Image } from "react-native";
+import { Text, ScrollView, View } from "react-native";
 import React from "react";
 import styles from "./style";
 import { Document } from "@/src/interfaces";
-import DocumentViewer from "../../components/DocumentViewer";
-import WebView from "react-native-webview";
 
 export default function InfoDocument({ item }: { item: Document | undefined }) {
   return (
@@ -29,10 +27,6 @@ export default function InfoDocument({ item }: { item: Document | undefined }) {
           </Text>
         </View>
       </View>
-      <WebView
-        source={require("@assets/declaracao_matricula.pdf")}
-        style={{ width: "100%", height: 400 }}
-      />
     </ScrollView>
   );
 }
