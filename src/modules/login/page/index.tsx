@@ -15,8 +15,14 @@ import InputApp from "@/src/components/InputApp";
 import LogoSvg from "@/src/components/Svg/logo";
 
 export default function Login() {
-  const { matricula, setMatricula, password, setPassword, handleLogin } =
-    useLoginStore();
+  const {
+    loading,
+    matricula,
+    setMatricula,
+    password,
+    setPassword,
+    handleLogin,
+  } = useLoginStore();
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <KeyboardAvoidingView
@@ -51,7 +57,7 @@ export default function Login() {
               handlePress={handleLogin}
               title="Login"
               icon="arrow-right"
-              loading={false}
+              loading={loading}
             />
           </View>
         </View>

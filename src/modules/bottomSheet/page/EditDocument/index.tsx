@@ -1,9 +1,12 @@
 import React, { useEffect } from "react";
-import { Text, ScrollView, View } from "react-native";
+import { Text, ScrollView, View, Alert } from "react-native";
 import { DocumentStatus, UploadedDocument } from "@/src/interfaces";
 import { statusDocument } from "@/src/constants/Filters";
 import { ButtonApp } from "@/src/components/ButtonApp";
-import { updateUploadedDocument } from "@/src/modules/upload/services/uploadService";
+import {
+  deleteUploadedDocument,
+  updateUploadedDocument,
+} from "@/src/modules/upload/services/uploadService";
 import { useUploadStore } from "@/src/modules/upload/store/useUploadStore";
 import { router } from "expo-router";
 import Tag from "@/src/components/Tag";
@@ -25,13 +28,42 @@ export default function EditDocument({
     }
   }, [item]);
 
-  const teste = async () => {
+  const editStatus = async () => {
     try {
       await updateUploadedDocument(item?.id, { ...item, status });
       updateDocumentStatus(item?.id, status);
       router.back();
     } catch (error) {
       console.error("Erro ao atualizar o documento:", error);
+    }
+  };
+
+  const confirmDelete = () => {
+    Alert.alert(
+      "Apagar Documento",
+      "Você tem certeza que deseja apagar este documento? Esta ação não pode ser desfeita.",
+      [
+        {
+          text: "Cancelar",
+          style: "cancel",
+        },
+        {
+          text: "Apagar",
+          style: "destructive",
+          onPress: () => handleDeleteDocument(),
+        },
+      ]
+    );
+  };
+
+  const handleDeleteDocument = async () => {
+    try {
+      if (item?.id) {
+        await deleteUploadedDocument(item.id);
+        router.back();
+      }
+    } catch (error) {
+      console.error("Erro ao apagar o documento:", error);
     }
   };
   return (
@@ -71,9 +103,16 @@ export default function EditDocument({
 
         <ButtonApp
           title="Salvar Alterações"
-          handlePress={teste}
+          handlePress={editStatus}
+          icon="check"
           type={status === originalStatus ? "primary" : "secondary"}
           disabled={status === originalStatus}
+        />
+        <ButtonApp
+          title="Apagar Documento"
+          handlePress={confirmDelete}
+          icon="trash"
+          type="secondary"
         />
       </View>
     </ScrollView>

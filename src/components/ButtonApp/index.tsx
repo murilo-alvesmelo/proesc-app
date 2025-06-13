@@ -33,7 +33,7 @@ export function ButtonApp({
       disabled={disabled || loading}
     >
       {loading ? (
-        <ActivityIndicator size="small" color={Colors.bgWhite} />
+        <ActivityIndicator size="small" color={Colors.camarone950} />
       ) : (
         <>
           {icon && (

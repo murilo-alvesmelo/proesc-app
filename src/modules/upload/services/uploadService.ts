@@ -25,3 +25,13 @@ export const updateUploadedDocument = async (
     throw error;
   }
 };
+
+export const deleteUploadedDocument = async (id: string | undefined) => {
+  try {
+    const res = await api.delete(`/uploadedDocuments/${id}`);
+    return res.data;
+  } catch (error) {
+    console.error("Error deleting uploaded document:", error);
+    throw error;
+  }
+}

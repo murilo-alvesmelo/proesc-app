@@ -1,9 +1,25 @@
+import React, { useEffect } from "react";
 import { Text, ScrollView, View } from "react-native";
-import React from "react";
-import styles from "./style";
 import { Document } from "@/src/interfaces";
+import { normalizeDocumentUrl } from "@/src/utils/resolveDocument";
+import { getDocumentCloudFlareUrl } from "../../services/modalService";
+import WebView from "react-native-webview";
+import styles from "./style";
 
 export default function InfoDocument({ item }: { item: Document | undefined }) {
+  const [documentUrl, setDocumentUrl] = React.useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchDocumentUrl = async () => {
+      if (item) {
+        const normalizedUrl = normalizeDocumentUrl(item.url);
+        const cloudFlareUrl = await getDocumentCloudFlareUrl(normalizedUrl);
+        setDocumentUrl(cloudFlareUrl);
+      }
+    };
+
+    fetchDocumentUrl();
+  }, [item]);
   return (
     <ScrollView>
       <View style={styles.subContainer}>
@@ -26,6 +42,17 @@ export default function InfoDocument({ item }: { item: Document | undefined }) {
               "Data não disponível"}
           </Text>
         </View>
+        {documentUrl && (
+          <WebView
+            source={{
+              uri: documentUrl,
+            }}
+            style={{
+              width: "100%",
+              height: 500,
+            }}
+          />
+        )}
       </View>
     </ScrollView>
   );

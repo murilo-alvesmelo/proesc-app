@@ -1,3 +1,6 @@
 export const normalizeDocumentUrl = (url: string): string => {
-  return url.replace("./assets/", "");
+  if (url.startsWith("./assets/")) {
+    return url.replace("./assets/", "");
+  }
+  return url;
 };

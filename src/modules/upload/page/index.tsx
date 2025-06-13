@@ -9,6 +9,7 @@ import ButtonUpload from "@/src/components/ButtonUpload";
 import Header from "@/src/components/Header";
 import ListDocuments from "../components/ListDocuments";
 import { useUploadStore } from "../store/useUploadStore";
+import EmptyView from "../components/Empty";
 
 export default function Upload() {
   const {
@@ -42,12 +43,16 @@ export default function Upload() {
           ))}
         </ScrollView>
       </View>
-      <ListDocuments
-        documentsAvailable={uploadedDocuments}
-        filteredDocuments={filteredDocuments}
-        handleRefresh={handleRefresh}
-        loading={loading}
-      />
+      {uploadedDocuments.length > 0 ? (
+        <ListDocuments
+          documentsAvailable={uploadedDocuments}
+          filteredDocuments={filteredDocuments}
+          handleRefresh={handleRefresh}
+          loading={loading}
+        />
+      ) : (
+        <EmptyView />
+      )}
       <ButtonUpload />
     </View>
   );

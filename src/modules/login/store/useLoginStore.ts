@@ -6,6 +6,7 @@ import { loginService } from "../services/loginService";
 export const useLoginStore = () => {
   const [matricula, setMatricula] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const { logIn } = useAuth();
 
   const isFormValid = () => {
@@ -22,6 +23,7 @@ export const useLoginStore = () => {
 
   const handleLogin = async () => {
     if (!isFormValid()) return;
+    setLoading(true);
 
     try {
       const { matricula: userMatricula, password: userPassword } =
@@ -29,10 +31,13 @@ export const useLoginStore = () => {
       logIn(userMatricula, userPassword);
     } catch (err) {
       Alert.alert("Oops!", "Credenciais inválidas. Tente novamente.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return {
+    loading,
     matricula,
     setMatricula,
     password,

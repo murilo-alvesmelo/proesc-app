@@ -29,3 +29,12 @@ export const uploadDocument = async (document: UploadedDocument) => {
     throw error;
   }
 };
+
+export const getDocumentCloudFlareUrl = async (document: string) => {
+  try {
+    return `https://pub-22a072508372410c886c24ac622a9588.r2.dev/${document}`;
+  } catch (error) {
+    console.error("Error generating CloudFlare URL:", error);
+    throw error;
+  }
+};
