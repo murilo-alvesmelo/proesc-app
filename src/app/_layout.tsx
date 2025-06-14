@@ -1,30 +1,27 @@
 import React from "react";
-import { router, Stack } from "expo-router";
-import { useAuth } from "../context/Auth";
-import { useEffect } from "react";
+import { Stack } from "expo-router";
+import { AuthProvider } from "@/src/context/Auth";
 import "../lib/fontawesome";
 
 export default function RootLayout() {
-  return <MainLayout />;
-}
-
-function MainLayout() {
-  const { isLoggedIn, isReady } = useAuth();
-
-  useEffect(() => {
-    if (isReady) {
-      if (isLoggedIn) {
-        router.replace("/(protected)/home");
-      } else {
-        router.replace("/(public)/login");
-      }
-    }
-  }, []);
-
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="(public)" />
-      <Stack.Screen name="(protected)" />
-    </Stack>
+    <AuthProvider>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen
+          name="(protected)"
+          options={{
+            animation: "none",
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="(public)"
+          options={{
+            animation: "none",
+            headerShown: false,
+          }}
+        />
+      </Stack>
+    </AuthProvider>
   );
 }

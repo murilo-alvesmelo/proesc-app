@@ -6,9 +6,7 @@ const styles = StyleSheet.create({
   input: {
     alignItems: "center",
     borderWidth: 2,
-    borderColor: Colors.bgWhite,
     borderRadius: Spaces.space8,
-    color: Colors.bgWhite,
     flexDirection: "row",
     fontSize: Spaces.space16,
     fontWeight: "400",
@@ -17,9 +15,23 @@ const styles = StyleSheet.create({
   },
   inputText: {
     flex: 1,
-    color: Colors.bgWhite,
     fontSize: Spaces.space16,
     fontWeight: "400",
+  },
+  primary: {
+    backgroundColor: Colors.camarone950,
+    borderColor: Colors.bgWhite,
+  },
+  secondary: {
+    backgroundColor: Colors.bgWhite,
+    borderColor: Colors.camarone900,
+    borderWidth: 1,
+  },
+  primaryText: {
+    color: Colors.bgWhite,
+  },
+  secondaryText: {
+    color: Colors.camarone900,
   },
 });
 
