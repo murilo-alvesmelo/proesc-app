@@ -18,6 +18,9 @@ export default function Upload() {
     setFilteredDocuments,
     handleRefresh,
     loading,
+    searchValue,
+    setSearchValue,
+    filteredList,
   } = useUploadStore();
   return (
     <View style={styles.container}>
@@ -26,8 +29,8 @@ export default function Upload() {
       <View style={{ padding: 8, gap: 8 }}>
         <InputApp
           placeholder="Pesquisar documento"
-          value={""}
-          onChangeValue={() => {}}
+          value={searchValue}
+          onChangeValue={setSearchValue}
           icon="search"
           keyboardType="default"
           type="secondary"
@@ -45,7 +48,7 @@ export default function Upload() {
       </View>
       {uploadedDocuments.length > 0 ? (
         <ListDocuments
-          documentsAvailable={uploadedDocuments}
+          documentsAvailable={filteredList}
           filteredDocuments={filteredDocuments}
           handleRefresh={handleRefresh}
           loading={loading}

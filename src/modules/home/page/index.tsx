@@ -14,7 +14,7 @@ export default function Home() {
   const {
     searchValue,
     setSearchValue,
-    documentsAvailable,
+    filteredList,
     filteredDocuments,
     setFilteredDocuments,
     handleRefresh,
@@ -45,7 +45,7 @@ export default function Home() {
         </ScrollView>
       </View>
       <ListDocuments
-        documentsAvailable={documentsAvailable}
+        documentsAvailable={filteredList}
         filteredDocuments={filteredDocuments}
         handleRefresh={handleRefresh}
         loading={loading}
