@@ -17,3 +17,10 @@ export interface UploadedDocument {
   uploadDate: string;
   file: File;
 }
+
+export type Category = "atestado" | "justificativa" | "requerimento";
+export type DocumentStatus =
+  | "enviado"
+  | "em_analise"
+  | "aprovado"
+  | "rejeitado";

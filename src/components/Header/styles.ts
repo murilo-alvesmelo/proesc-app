@@ -6,14 +6,14 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   navbar: {
     justifyContent: "center",
-    alignItems: "flex-start",
+    alignItems: "center",
     padding: Spaces.space12,
-    paddingVertical: Spaces.space16,
     backgroundColor: Colors.camarone950,
     color: Colors.camarone200,
+    height: 120,
   },
   title: {
-    fontSize: Fonts.font16,
+    fontSize: Fonts.font20,
     fontWeight: "bold",
     color: Colors.camarone100,
   },
@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
+    marginTop: Spaces.space8,
   },
 });
 

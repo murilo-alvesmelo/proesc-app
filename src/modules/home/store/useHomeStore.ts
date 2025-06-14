@@ -1,17 +1,11 @@
 import { Document } from "@/src/interfaces";
 import { useEffect, useState } from "react";
-import { fetchCategories, fetchDocuments } from "../services/homeService";
+import { fetchDocuments } from "../services/homeService";
 
 export const useHomeStore = () => {
   const [documentsAvailable, setDocumentsAvailable] = useState<Document[]>([]);
-  const [categories, setCategories] = useState<[string, string][]>([]);
-  const [filteredDocuments, setFilteredDocuments] = useState("");
+  const [filteredDocuments, setFilteredDocuments] = useState("todos");
   const [loading, setLoading] = useState(false);
-
-  const getCategories = async () => {
-    const catAvailable = await fetchCategories();
-    setCategories(Object.entries(catAvailable));
-  };
 
   const getDocumentsAvailable = async () => {
     const docs = await fetchDocuments();
@@ -20,7 +14,7 @@ export const useHomeStore = () => {
 
   const handleRefresh = async () => {
     setLoading(true);
-    setFilteredDocuments("");
+    setFilteredDocuments("todos");
     setDocumentsAvailable([]);
     setTimeout(() => {
       getDocumentsAvailable();
@@ -30,14 +24,12 @@ export const useHomeStore = () => {
 
   useEffect(() => {
     getDocumentsAvailable();
-    getCategories();
   }, []);
 
   return {
     filteredDocuments,
     setFilteredDocuments,
     documentsAvailable,
-    categories,
     getDocumentsAvailable,
     handleRefresh,
     loading,

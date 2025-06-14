@@ -12,9 +12,11 @@ const style = StyleSheet.create({
     padding: Spaces.space12,
     backgroundColor: Colors.bgWhite,
     marginRight: Spaces.space8,
+    borderWidth: 1,
+    borderColor: Colors.camarone900,
   },
   title: {
-    color: Colors.camarone950,
+    color: Colors.camarone900,
     fontSize: Fonts.font12,
     fontWeight: "700",
     textAlign: "center",

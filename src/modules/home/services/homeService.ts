@@ -1,17 +1,12 @@
 import { Document, UploadedDocument } from "@/src/interfaces";
-import data from "../../../../assets/mock/data.json";
+import { api } from "@/src/lib/axios";
 
 export const fetchDocuments = async () => {
-  await new Promise((res) => setTimeout(res, 500));
-  return data.availableDocuments as Document[];
-};
-
-export const fetchCategories = async () => {
-  await new Promise((res) => setTimeout(res, 500));
-  return data.documentCategories.available;
-};
-
-export const uploadDocument = async (doc: UploadedDocument) => {
-  await new Promise((res) => setTimeout(res, 1000));
-  return { success: true };
+  try {
+    const res = await api.get("/availableDocuments");
+    return res.data as Document[];
+  } catch (error) {
+    console.error("Error fetching documents:", error);
+    throw error;
+  }
 };

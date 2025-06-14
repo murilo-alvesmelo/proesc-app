@@ -1,56 +1,31 @@
 import React from "react";
-import {
-  StyleSheet,
-  FlatList,
-  View,
-  ScrollView,
-  RefreshControl,
-} from "react-native";
-import { useHomeStore } from "../../store/useHomeStore";
-import InputApp from "@/src/components/InputApp";
-import Tag from "@/src/components/Tag";
+import { StyleSheet, FlatList, View, RefreshControl } from "react-native";
 import Spaces from "@/src/constants/Spaces";
 import Colors from "@/src/constants/Colors";
 import Card from "../Card";
+import { Document } from "@/src/interfaces";
 
-export default function ListDocuments() {
-  const {
-    documentsAvailable,
-    categories,
-    filteredDocuments,
-    setFilteredDocuments,
-    handleRefresh,
-    loading,
-  } = useHomeStore();
+type ListDocumentsProps = {
+  documentsAvailable: Document[];
+  filteredDocuments: string;
+  handleRefresh: () => void;
+  loading: boolean;
+};
 
-  const filteredDocs = documentsAvailable.filter(
-    filteredDocuments === ""
+export default function ListDocuments({
+  documentsAvailable,
+  filteredDocuments,
+  handleRefresh,
+  loading,
+}: ListDocumentsProps) {
+  const filteredDocs = documentsAvailable?.filter(
+    filteredDocuments === "todos"
       ? () => true
       : (doc) => doc.category === filteredDocuments
   );
 
   return (
     <View style={styles.documentList}>
-      <InputApp
-        placeholder="Pesquisar documento"
-        value=""
-        onChangeValue={() => {}}
-        icon="search"
-        keyboardType="default"
-        type="secondary"
-      />
-      <View>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {categories.map(([key, label]) => (
-            <Tag
-              key={key}
-              title={label}
-              isFunction={() => setFilteredDocuments(key)}
-              active={filteredDocuments === key}
-            />
-          ))}
-        </ScrollView>
-      </View>
       <FlatList
         data={filteredDocs}
         keyExtractor={(item) => item.id.toString()}
